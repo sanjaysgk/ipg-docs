@@ -1,0 +1,20 @@
+---
+title: "Run on Monash M3"
+description: "End-to-end SLURM walkthrough using the monash profile."
+icon: "school"
+---
+
+<Note>
+**Placeholder.** Phase 6 of the IPG docs rollout. This will be the canonical Monash tutorial.
+</Note>
+
+## What this page will cover
+
+- Required Monash account / project setup (`xy86`)
+- Loading nextflow + singularity via modules or pixi
+- Building the samplesheet from your raw FASTQs in `/fs04/scratch2/xy86/...`
+- Submitting via `pixi run nextflow run sanjaysgk/ipg -profile monash,singularity --input ... --outdir ...`
+- Using `smux` for the long-running Nextflow head process
+- Resuming with `-resume` after a step fails
+- Monitoring SLURM jobs (`squeue -A xy86`)
+- Locating outputs and the cryptic FASTA

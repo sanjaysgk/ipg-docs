@@ -1,0 +1,23 @@
+---
+title: "BQSR subworkflow"
+description: "Steps 13–16: GATK base quality score recalibration with dbSNP, known indels, and Mills + 1000G gold standard."
+icon: "sliders-horizontal"
+sidebarTitle: "BQSR"
+---
+
+<Note>
+**Steps 13–16** of the legacy 31-step pipeline. **Placeholder** — Phase 4 of the IPG docs rollout will fill this with the real subworkflow page.
+</Note>
+
+## What this page will cover
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 13 | `gatk BaseRecalibrator` (1st pass) | Build recalibration table from known-sites |
+| 14 | `gatk ApplyBQSR` | Apply recalibration → `_score_corrected.bam` |
+| 15 | `gatk BaseRecalibrator` (2nd pass) | Recalibrate the recalibrated BAM (QC) |
+| 16 | `gatk AnalyzeCovariates` (R 3.5.0) | Generate the before/after covariate plot PDF |
+
+Required reference data: dbSNP138, Broad known indels, Mills + 1000G gold standard indels — see [Known sites parameters](/api-reference/parameters/known-sites).
+
+Source: [`subworkflows/local/bqsr/main.nf`](https://github.com/sanjaysgk/ipg/blob/dev/cryptic-port/subworkflows/local/bqsr/main.nf).

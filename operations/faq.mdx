@@ -1,0 +1,18 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about the IPG pipeline."
+icon: "circle-help"
+---
+
+<Note>
+**Placeholder.** Phase 6 of the IPG docs rollout.
+</Note>
+
+## Questions this page will answer
+
+- Why does the legacy bash script have 32 entries when there are 31 logical steps? (Step 31 Squish is duplicated in `run_allSteps.sh` lines 100–101.)
+- Why is dbSNP / known indels needed if this is RNA-seq, not DNA-seq?
+- Can I use a non-GENCODE annotation? (Generally no — `triple_translate` and `alt_liftover` were tested against GENCODE.)
+- What MS search engine consumes the cryptic FASTA? (PEAKS in the original paper; any FASTA-compatible engine works.)
+- When will `origins` and `db_compare` be available? (Planned for the [`ipg-origins` sister pipeline](/background/related-work).)
+- Can I run only the variant-calling half? (Yes — Nextflow `-resume` with the `mutect_calling` subworkflow as the entry point.)

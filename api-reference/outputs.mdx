@@ -1,0 +1,36 @@
+---
+title: "Output files"
+description: "On-disk file tree the IPG pipeline writes under --outdir."
+icon: "folder-tree"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. The real page will use `<AccordionGroup>` of `<Accordion>`s, one per output directory, with `<ResponseField>` per file.
+</Note>
+
+## What this page will cover
+
+```text
+results/
+├── <sample>/
+│   ├── fastqc/
+│   ├── star/
+│   ├── stringtie/
+│   ├── gffcompare/
+│   ├── Variant_Calling/
+│   │   ├── *_score_corrected.bam        # post-BQSR BAM (steps 13-16)
+│   │   ├── *_mutect.vcf.gz              # raw Mutect2 calls (step 17)
+│   │   ├── *_mutect_COV_filtered.vcf    # post-FilterMutectCalls (step 21)
+│   │   ├── *_mutect_COV_pass.vcf        # post-SelectVariants (step 22)
+│   │   ├── *_mutect_COV_pass_unmasked.vcf
+│   │   └── *_mutect_COV_pass_indel.vcf
+│   └── Database_Construction/
+│       └── <sample>_cryptic.fasta       # ★ THE DELIVERABLE (step 31)
+├── multiqc/
+│   └── multiqc_report.html
+└── pipeline_info/
+    ├── execution_report.html
+    ├── execution_timeline.html
+    ├── execution_trace.txt
+    └── sanjaysgk_ipg_software_mqc_versions.yml
+```

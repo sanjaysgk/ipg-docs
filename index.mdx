@@ -1,0 +1,86 @@
+---
+title: "IPG"
+description: "Build sample-specific cryptic peptide protein databases from RNA-seq data with a reproducible nf-core Nextflow pipeline."
+sidebarTitle: "Welcome"
+mode: "wide"
+---
+
+<Note>
+**`sanjaysgk/ipg`** is the Nextflow / nf-core port of the immunopeptidogenomics database-construction pipeline first published in **[Scull et al. 2021, *Mol Cell Proteomics*](https://doi.org/10.1016/j.mcpro.2021.100143)**. This documentation site is the canonical reference for installing, running, and understanding it.
+</Note>
+
+
+## What this pipeline does
+
+
+`sanjaysgk/ipg` consumes paired-end RNA-seq reads and produces a **sample-specific, three-frame translated protein FASTA database** suitable for searching tandem mass spectrometry spectra to discover cryptic peptides — peptides arising from non-canonical translation events that aren't in standard reference proteomes.
+
+It is a faithful nf-core port of a 31-step legacy bash pipeline that combines `STAR`, `StringTie`, `gffcompare`, `GATK4` (BaseRecalibrator, Mutect2, FastaAlternateReferenceMaker), `gffread`, and a small set of custom C tools (`curate_vcf`, `revert_headers`, `alt_liftover`, `triple_translate`, `squish`) authored by **Katherine E. Scull**.
+
+```mermaid
+flowchart LR
+  R[Paired FASTQs] --> A1[STAR 2-pass]
+  A1 --> A2[RSeQC strand]
+  A2 --> A3[Sort BAM]
+  A3 --> T1[StringTie]
+  T1 --> T2[gffcompare]
+  T2 --> B1[Mark duplicates]
+  B1 --> B2[SplitNCigarReads]
+  B2 --> Q1[BaseRecalibrator x2]
+  Q1 --> Q2[ApplyBQSR]
+  Q2 --> M1[Mutect2]
+  M1 --> M2[FilterMutectCalls]
+  M2 --> M3[curate_vcf]
+  M3 --> D1[FastaAlternateRef]
+  D1 --> D2[alt_liftover]
+  D2 --> D3[triple_translate]
+  D3 --> D4[squish]
+  D4 --> D5[(cryptic.fasta)]:::deliv
+
+  classDef deliv fill:#16A34A,color:#fff,stroke:#0E7C3D,stroke-width:2px;
+```
+
+The deliverable is `<sample>_cryptic.fasta` — feed it to PEAKS or any FASTA-compatible MS database search engine.
+
+## Choose your path
+
+<Columns cols={2}>
+  <Card title="I'm new — show me the science" icon="flask-conical" href="/background/cryptic-peptides">
+    Read the biology primer and the founding paper before touching any code.
+  </Card>
+  <Card title="I want to run it now" icon="rocket" href="/get-started/quickstart">
+    Quickstart on the chr22 test profile in under 15 minutes.
+  </Card>
+  <Card title="I run pipelines on Monash M3" icon="school" href="/tutorials/monash-m3">
+    End-to-end SLURM walkthrough using the `monash` profile.
+  </Card>
+  <Card title="I'm reviewing or auditing" icon="microscope" href="/pipeline/overview">
+    Step-by-step reference: 31 steps mapped across 6 nf-core subworkflows.
+  </Card>
+</Columns>
+
+## At a glance
+
+<Columns cols={3}>
+  <Card title="Steps" icon="list-ordered">
+    **31** distinct stages, grouped into **6** nf-core subworkflows.
+  </Card>
+  <Card title="Languages" icon="code">
+    Nextflow DSL2, plus 5 kescull C tools preserved from the original publication.
+  </Card>
+  <Card title="Runs on" icon="server">
+    Docker, Singularity, Podman, Apptainer, Conda. Tested on Monash M3 SLURM.
+  </Card>
+</Columns>
+
+## Cite the pipeline
+
+> Scull, K. E., Pandey, K., Ramarathinam, S. H. & Purcell, A. W. **"Immunopeptidogenomics: Harnessing RNA-Seq to Illuminate the Dark Immunopeptidome."** *Molecular & Cellular Proteomics* **20**, 100143 (2021). DOI: [10.1016/j.mcpro.2021.100143](https://doi.org/10.1016/j.mcpro.2021.100143).
+
+A pipeline-specific Zenodo DOI will be issued at first tagged release. See [Citations](/background/citations) for tool-by-tool attribution.
+
+## Project status
+
+<Update label="In development" description="2026-04-09">
+  This documentation site is in **Phase 1** of its rollout. The pipeline at [`sanjaysgk/ipg`](https://github.com/sanjaysgk/ipg) is on the `dev/cryptic-port` branch — wired end-to-end, awaiting first real run. Pages marked "Placeholder" are scaffolds; their structure is final but content is still being written. Track the rollout in the [contributing changelog](/contributing/changelog).
+</Update>

@@ -1,0 +1,18 @@
+---
+title: "Reference genome parameters"
+description: "Reference FASTA, indices, and annotation required by ALIGN_QC, BAM_PREP, BQSR, MUTECT_CALLING, and DB_CONSTRUCT."
+icon: "dna"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. See the [PIPELINE_STEPS.md reference data table](https://github.com/sanjaysgk/ipg-docs) for the full list while this page is being written.
+</Note>
+
+## Parameters covered
+
+- `--fasta` — primary assembly FASTA (GRCh38, GENCODE-compatible)
+- `--fasta_fai` — samtools faidx index
+- `--fasta_dict` — GATK4 sequence dictionary
+- `--star_index` — STAR genome index directory (built with STAR 2.7.9a)
+- `--gtf` — GENCODE primary-assembly annotation GTF (v44 in the legacy pipeline)
+- `--rseqc_bed` — BED12 for RSeQC `infer_experiment.py`

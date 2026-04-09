@@ -1,0 +1,24 @@
+---
+title: "Methods"
+description: "Formal methods description for the IPG pipeline as implemented in sanjaysgk/ipg."
+icon: "microscope"
+---
+
+<Note>
+**Placeholder.** Phase 6 of the IPG docs rollout. This page will closely mirror a methods section in a manuscript — written for citation, not tutorial.
+</Note>
+
+## What this page will cover
+
+- Reads → STAR alignment → coordinate-sorted BAM
+- StringTie + gffcompare reconciliation against GENCODE
+- GATK best-practices RNA-seq variant calling (BAM_PREP → BQSR → Mutect2)
+- Mutect2 contamination correction with the small ExAC germline resource
+- VCF curation (kescull `curate_vcf`) and the unmasked / indel split
+- Alt-reference construction (GATK `FastaAlternateReferenceMaker`)
+- Coordinate liftover and GTF sort (kescull `alt_liftover`, `gff3sort`)
+- 3-frame translation (kescull `triple_translate`)
+- Database deduplication (kescull `squish`)
+- Final cryptic FASTA → MS database search (downstream, scope of `ipg-origins`)
+
+Includes KaTeX formulas for: Mutect2 likelihood model, BQSR covariate adjustment, FPKM derivation.

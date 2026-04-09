@@ -1,0 +1,29 @@
+---
+title: "Related work and roadmap"
+description: "Tools that are NOT yet ported, the planned ipg-origins sister pipeline, and other immunopeptidogenomics resources."
+icon: "git-fork"
+---
+
+<Note>
+**Placeholder.** Phase 6 of the IPG docs rollout. This page is the honest scope statement for the project.
+</Note>
+
+## What this page will cover
+
+### Tools NOT yet ported (Phase 2 → `ipg-origins`)
+
+| Tool | Language | Original purpose |
+|---|---|---|
+| `filter_FPKM.c` | C | Filter StringTie transcripts by FPKM |
+| `origins.c` | C | Classify cryptic peptide origin (intron / UTR / frameshift / novel ORF) — **the biological interpretation step** |
+| `msDot.c` | C | Compute MS spectrum dot products |
+| `db_compare.R` | R | Compare PEAKS results across two databases |
+| `db_compare_v2.R` | R | Enhanced db_compare with ambiguity classification |
+
+These will land in the planned [`sanjaysgk/ipg-origins`](https://github.com/sanjaysgk) sister pipeline. The current `sanjaysgk/ipg` covers steps 1–31 (database construction); `ipg-origins` will cover MS search → peptide classification → origin assignment.
+
+### Other immunopeptidogenomics tools and resources
+
+- **Original C source:** [github.com/sanjaysgk/immunopeptidogenomics](https://github.com/sanjaysgk/immunopeptidogenomics) (forked from `kescull/immunopeptidogenomics`)
+- **Founding paper:** [Scull et al. 2021, Mol Cell Proteomics](https://doi.org/10.1016/j.mcpro.2021.100143)
+- nf-core / Galaxy proteogenomics tools (other communities working on similar problems)

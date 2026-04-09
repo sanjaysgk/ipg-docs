@@ -1,0 +1,16 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# Local AI working memory — never committed
+.claude/
+CLAUDE.md
+
+# Mintlify build artifacts and editor cruft
+.mintlify/
+.next/
+node_modules/
+*.log
+.DS_Store
+.vscode/
+.idea/

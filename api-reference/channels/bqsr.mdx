@@ -1,0 +1,25 @@
+---
+title: "BQSR channels"
+description: "Inputs and outputs of the BQSR subworkflow (steps 13–16)."
+icon: "arrows-left-right"
+sidebarTitle: "bqsr"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout.
+</Note>
+
+## Inputs
+
+- `splitncigar_bam` — from `BAM_PREP`
+- `ch_fasta`, `ch_fai`, `ch_dict` — reference FASTA bundle
+- `ch_known_sites` — `[meta, [dbsnp, known_indels, mills]]`
+- `ch_known_sites_tbi` — matching tabix indices
+
+## Outputs
+
+- `recal_bam_bai` — recalibrated BAM + BAI, `[meta, bam, bai]`
+- `analyze_covariates_pdf` — before/after covariate plot
+- `versions` — `versions.yml` channel
+
+See [pipeline/bqsr](/pipeline/bqsr) for the science.

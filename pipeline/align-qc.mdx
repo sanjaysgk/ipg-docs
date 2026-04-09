@@ -1,0 +1,20 @@
+---
+title: "ALIGN_QC subworkflow"
+description: "Steps 1–3: STAR two-pass alignment, coordinate sorting, and RSeQC strandedness inference."
+icon: "align-left"
+sidebarTitle: "ALIGN_QC"
+---
+
+<Note>
+**Steps 1–3** of the legacy 31-step pipeline. **Placeholder** — Phase 4 of the IPG docs rollout will fill this with the real subworkflow page using the [pipeline-stage template](/contributing/architecture).
+</Note>
+
+## What this page will cover
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 1 | STAR 2.7.9a (`--twopassMode Basic`) | First-pass alignment for transcript assembly |
+| 2 | RSeQC `infer_experiment.py` | Auto-detect library strandedness |
+| 3 | `samtools sort` (coordinate) | Sort BAM for downstream consumption by `transcript_assembly` |
+
+Source: [`subworkflows/local/align_qc/main.nf`](https://github.com/sanjaysgk/ipg/blob/dev/cryptic-port/subworkflows/local/align_qc/main.nf).

@@ -1,0 +1,19 @@
+---
+title: "TRANSCRIPT_ASSEMBLY subworkflow"
+description: "Steps 4–5: StringTie transcript assembly and gffcompare reconciliation against GENCODE."
+icon: "git-compare"
+sidebarTitle: "TRANSCRIPT_ASSEMBLY"
+---
+
+<Note>
+**Steps 4–5** of the legacy 31-step pipeline. **Placeholder** — Phase 4 of the IPG docs rollout will fill this with the real subworkflow page.
+</Note>
+
+## What this page will cover
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 4 | StringTie 2.1.5 (`-L COV`) | Reference-guided transcript assembly with coverage-based filtering |
+| 5 | gffcompare | Reconcile assembled transcripts against GENCODE v44; emit `prefix.combined.gtf` and `.tracking` |
+
+Source: [`subworkflows/local/transcript_assembly/main.nf`](https://github.com/sanjaysgk/ipg/blob/dev/cryptic-port/subworkflows/local/transcript_assembly/main.nf).

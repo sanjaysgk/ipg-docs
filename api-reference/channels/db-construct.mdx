@@ -1,0 +1,25 @@
+---
+title: "DB_CONSTRUCT channels"
+description: "Inputs and outputs of the DB_CONSTRUCT subworkflow (steps 24–31), including the cryptic_fasta deliverable."
+icon: "arrows-left-right"
+sidebarTitle: "db_construct"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. `cryptic_fasta` is the pipeline's primary deliverable.
+</Note>
+
+## Inputs
+
+- `vcf_unmasked` — `[meta, path]` from `MUTECT_CALLING` step 23
+- `vcf_indel` — `[meta, path]` from `MUTECT_CALLING` step 23
+- `assembly_gtf` — `prefix.combined.gtf` from `TRANSCRIPT_ASSEMBLY`
+- `tracking` — `prefix.tracking` from `TRANSCRIPT_ASSEMBLY`
+- `ch_fasta`, `ch_fai`, `ch_dict` — reference FASTA bundle
+
+## Outputs
+
+- **`cryptic_fasta`** — `[meta, path]` — the **sample-specific 3-frame translated cryptic peptide protein database**. Lands at `results/<sample>/Database_Construction/<sample>_cryptic.fasta`. This is what gets fed to PEAKS / downstream MS database search.
+- `versions` — `versions.yml` channel
+
+See [pipeline/db-construct](/pipeline/db-construct) for the science.

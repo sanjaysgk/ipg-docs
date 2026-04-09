@@ -1,0 +1,27 @@
+---
+title: "ALIGN_QC channels"
+description: "Inputs and outputs of the ALIGN_QC subworkflow (steps 1–3)."
+icon: "arrows-left-right"
+sidebarTitle: "align_qc"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. The real page will document inputs with `<ParamField>` and outputs with `<ResponseField>`.
+</Note>
+
+## Inputs
+
+- `ch_reads` — `[meta, [r1, r2]]` from samplesheet
+- `ch_star_index` — `[meta, path]` STAR index directory
+- `ch_gtf` — `[meta, path]` GENCODE GTF
+- `ch_fasta_fai` — `[meta, fasta, fai]`
+- `ch_rseqc_bed` — RSeQC BED12
+
+## Outputs
+
+- `sorted_bam` — coordinate-sorted BAM, `[meta, bam, bai]`
+- `star_bam_unsorted` — raw STAR output for the second pass
+- `infer_experiment_txt` — RSeQC strandedness report
+- `versions` — `versions.yml` channel
+
+See [pipeline/align-qc](/pipeline/align-qc) for the science.

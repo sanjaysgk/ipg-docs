@@ -1,0 +1,135 @@
+---
+title: "Local dev preview on Monash M3"
+description: "How to run `mint dev` on a Monash M3 interactive node and tunnel it back to your laptop browser."
+---
+
+This page documents how to preview the IPG documentation site locally while
+working on Monash M3. The Mintlify dev server runs on a compute/interactive
+node and you reach it from your laptop via an SSH port-forward through the
+login node.
+
+## One-time setup on M3
+
+From the `ipg-docs` project root on M3, create a pixi env with Node.js and
+let `npx` pull the Mintlify CLI on demand:
+
+```bash
+cd /home/sson0030/xy86_scratch2/sanjay/ATLANTIS/RNAseq/Analysis/Cryptic/ipg-docs
+
+pixi init                 # only if pixi.toml does not already exist
+pixi add nodejs=22.*
+pixi run node --version   # sanity check — should print v22.x
+```
+
+Optionally register a pixi task so you don't have to retype the command:
+
+```bash
+pixi task add dev "npx mint dev"
+```
+
+## Start the dev server (every session)
+
+1. SSH into M3 and grab an interactive node — **don't run the dev server on
+   `m3-dtn` (data transfer node) or directly on the login node**. Use `smux`
+   so the session survives disconnects:
+
+   ```bash
+   ssh sson0030@m3.massive.org.au
+   smux new-session --time=4:00:00 --ntasks=1 --mem=4G
+   ```
+
+2. Note the hostname of the node `smux` placed you on — you'll need it for
+   the SSH tunnel:
+
+   ```bash
+   hostname    # e.g. m3s111
+   ```
+
+3. Start Mintlify from the project root:
+
+   ```bash
+   cd /home/sson0030/xy86_scratch2/sanjay/ATLANTIS/RNAseq/Analysis/Cryptic/ipg-docs
+   pixi run npx mint dev
+   # or, if you registered the task above:
+   pixi run dev
+   ```
+
+   First run takes 30s–2min while `npx` fetches the Mintlify renderer. Wait
+   for the line:
+
+   ```
+   ⚡ Mintlify dev server running on http://localhost:3000
+   ```
+
+   **Leave this terminal open** — Ctrl-C kills the server.
+
+## Forward the port to your laptop
+
+Open a **second terminal on your laptop** (not on M3) and tunnel through the
+login node to the interactive node from step 2. Replace `m3s111` with the
+hostname `hostname` reported.
+
+```bash
+ssh -L 3000:m3s111:3000 sson0030@m3.massive.org.au
+```
+
+What this means:
+- `3000:m3s111:3000` — forward your laptop's port `3000` to port `3000` on
+  `m3s111`, with `m3.massive.org.au` resolving the hostname.
+- Leave this SSH session open for as long as you want the preview live.
+
+Then open your laptop browser at:
+
+```
+http://localhost:3000
+```
+
+### Two-hop fallback
+
+If `mint dev` bound only to `127.0.0.1` on the compute node and the single-
+hop tunnel above gives "connection refused", chain two tunnels instead:
+
+```bash
+# Terminal A on laptop → tunnel to login node
+ssh -L 3000:localhost:3000 sson0030@m3.massive.org.au
+
+# Inside that session, on the login node, tunnel onward to the compute node
+ssh -L 3000:localhost:3000 m3s111
+```
+
+Now: laptop:3000 → login node:3000 → m3s111:3000.
+
+### Local port already in use?
+
+Pick a different port on the laptop side:
+
+```bash
+ssh -L 3001:m3s111:3000 sson0030@m3.massive.org.au
+# then visit http://localhost:3001
+```
+
+## Troubleshooting
+
+- **`connection refused` in browser** — `mint dev` isn't actually running
+  (check the M3 terminal), or you tunneled to the wrong hostname (the
+  interactive node may have changed across `smux` sessions).
+- **Hostname changed after reconnect** — `smux` may place you on a different
+  node (`m3s112`, `m3s113`, …). Re-run `hostname` and update the `-L` flag.
+- **`mint dev` died** — the interactive session probably hit its wall-time
+  limit. Start a new `smux` session with `--time=...` and relaunch.
+- **Edits not showing up** — Mintlify hot-reloads on file save; if it stalls,
+  Ctrl-C and `pixi run npx mint dev` again.
+
+## TL;DR cheat sheet
+
+```bash
+# On M3 (interactive node, e.g. m3s111)
+cd /home/sson0030/xy86_scratch2/sanjay/ATLANTIS/RNAseq/Analysis/Cryptic/ipg-docs
+pixi run npx mint dev
+
+# On laptop (replace m3s111 with current hostname)
+ssh -L 3000:m3s111:3000 sson0030@m3.massive.org.au
+
+# Browser
+open http://localhost:3000
+```

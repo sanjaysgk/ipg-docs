@@ -1,0 +1,18 @@
+---
+title: "Your first real run"
+description: "Run the IPG pipeline on a real RNA-seq sample on Monash M3."
+icon: "play"
+---
+
+<Note>
+**Placeholder.** Phase 3 of the IPG docs rollout — see `.claude/PLAN.md`. This will be the canonical end-to-end walkthrough for new users with real data.
+</Note>
+
+## What this page will cover
+
+- Building the samplesheet for your real RNA-seq data
+- Required reference data (FASTA, GTF, STAR index, dbSNP, known indels, Mills, germline resource)
+- Picking the right profile (`monash`, `local`, `docker`, `singularity`)
+- Submitting the run via SLURM with `pixi run nextflow run ... -profile monash,singularity -bg`
+- Monitoring progress and reading the MultiQC report
+- Locating the cryptic FASTA deliverable

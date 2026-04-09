@@ -1,0 +1,23 @@
+---
+title: "BAM_PREP channels"
+description: "Inputs and outputs of the BAM_PREP subworkflow (steps 6–12)."
+icon: "arrows-left-right"
+sidebarTitle: "bam_prep"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout.
+</Note>
+
+## Inputs
+
+- `star_bam_unsorted` — raw STAR output from `ALIGN_QC` (used as the second-pass alignment input)
+- `ch_reads` — original FASTQs for `FastqToSam`
+- `ch_fasta`, `ch_fai`, `ch_dict` — reference FASTA bundle
+
+## Outputs
+
+- `splitncigar_bam` — post `SplitNCigarReads` BAM, `[meta, bam, bai]`
+- `versions` — `versions.yml` channel
+
+See [pipeline/bam-prep](/pipeline/bam-prep) for the science.

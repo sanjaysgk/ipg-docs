@@ -1,0 +1,24 @@
+---
+title: "BAM_PREP subworkflow"
+description: "Steps 6–12: second STAR pass, queryname sort, FastqToSam, MergeBamAlignment, MarkDuplicates, SplitNCigarReads, ValidateSamFile."
+icon: "layers"
+sidebarTitle: "BAM_PREP"
+---
+
+<Note>
+**Steps 6–12** of the legacy 31-step pipeline. **Placeholder** — Phase 4 of the IPG docs rollout will fill this with the real subworkflow page.
+</Note>
+
+## What this page will cover
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 6 | STAR 2.7.9a (second pass) | Variant-calling-grade alignment, separate output dir |
+| 7 | `samtools sort -n` | Queryname sort for `MergeBamAlignment` |
+| 8 | `gatk FastqToSam` | Build unmapped BAM with read groups |
+| 9 | `gatk MergeBamAlignment` | Merge aligned + unmapped BAMs |
+| 10 | `gatk MarkDuplicates` | Mark PCR / optical duplicates (`--READ_NAME_REGEX null`) |
+| 11 | `gatk SplitNCigarReads` | RNA-seq specific: split reads at N's in CIGAR |
+| 12 | `gatk ValidateSamFile` | Sanity check the prepared BAM |
+
+Source: [`subworkflows/local/bam_prep/main.nf`](https://github.com/sanjaysgk/ipg/blob/dev/cryptic-port/subworkflows/local/bam_prep/main.nf).

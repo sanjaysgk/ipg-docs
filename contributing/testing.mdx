@@ -1,0 +1,18 @@
+---
+title: "Testing the docs site"
+description: "Local checks and CI for the IPG documentation site."
+icon: "test-tube"
+---
+
+<Note>
+**Placeholder.** Phase 6 of the IPG docs rollout. The pipeline has its own testing page in the `Pipeline` tab.
+</Note>
+
+## What this page will cover
+
+- `mint validate` — strict build (exits non-zero on warnings)
+- `mint broken-links --check-anchors --check-external --check-snippets`
+- `mint a11y` — accessibility checks (alt text + colour contrast)
+- Spell check via `cspell` or `vale` (TBD in Phase 7)
+- GitHub Actions workflow (planned): runs all of the above on every PR
+- The `nextflow_schema.json` ↔ `<ParamField>` drift check (Phase 7)

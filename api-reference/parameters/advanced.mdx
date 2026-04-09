@@ -1,0 +1,16 @@
+---
+title: "Advanced parameters"
+description: "Resource limits, retry strategy, scratch directories, and process-level escape hatches."
+icon: "settings-2"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. These parameters live in `nextflow.config` and `conf/base.config` and are tuned per-profile.
+</Note>
+
+## Parameters covered
+
+- `--max_cpus`, `--max_memory`, `--max_time` — global resource ceilings
+- `--singularity_cache_dir` — shared singularity image cache (Monash uses `/fs04/scratch2/xy86/singularity_cache`)
+- Per-process retry strategy (defined in `conf/base.config`)
+- Custom config file (`-c` Nextflow flag, NOT a `--param`)

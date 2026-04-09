@@ -1,0 +1,20 @@
+---
+title: "Samplesheet format"
+description: "CSV format the IPG pipeline expects via --input."
+icon: "table"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. The real page will document each column with `<ParamField>`.
+</Note>
+
+## What this page will cover
+
+| Column | Required | Description |
+|---|---|---|
+| `sample` | yes | Sample identifier; samples with the same name across rows are concatenated |
+| `fastq_1` | yes | Path to R1 FASTQ (gzipped) |
+| `fastq_2` | no | Path to R2 FASTQ for paired-end (omit for single-end) |
+| `strandedness` | no | `forward` / `reverse` / `unstranded` (auto-detected by RSeQC if omitted) |
+
+Plus: examples for single-end, paired-end, and multi-lane sequencing.

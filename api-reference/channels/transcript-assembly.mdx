@@ -1,0 +1,24 @@
+---
+title: "TRANSCRIPT_ASSEMBLY channels"
+description: "Inputs and outputs of the TRANSCRIPT_ASSEMBLY subworkflow (steps 4–5)."
+icon: "arrows-left-right"
+sidebarTitle: "transcript_assembly"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout.
+</Note>
+
+## Inputs
+
+- `sorted_bam` — coordinate-sorted BAM from `ALIGN_QC`
+- `ch_gtf` — GENCODE reference GTF
+- `ch_fasta_fai` — reference FASTA + index
+
+## Outputs
+
+- `assembly_gtf` — `prefix.combined.gtf` from gffcompare
+- `tracking` — `prefix.tracking` (used by `triple_translate -c` in `db_construct`)
+- `versions` — `versions.yml` channel
+
+See [pipeline/transcript-assembly](/pipeline/transcript-assembly) for the science.

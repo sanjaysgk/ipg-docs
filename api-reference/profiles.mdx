@@ -1,0 +1,22 @@
+---
+title: "Execution profiles"
+description: "Built-in profiles for test, local, Monash M3, Docker, and Singularity execution."
+icon: "server"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout. The real page will use `<Tabs>` with one tab per profile.
+</Note>
+
+## What this page will cover
+
+| Profile | Source | Use case |
+|---|---|---|
+| `test` | `conf/test.config` | Tiny chr22 sample from `nf-core/test-datasets`, ~15 min on a Monash compute node |
+| `local` | `conf/local.config` | Laptop / local workstation runs |
+| `monash` | `conf/monash.config` | Monash M3 SLURM (account `xy86`, partition `comp`, shared singularity cache) |
+| `docker` | nf-core base | Docker container engine |
+| `singularity` | nf-core base | Singularity / Apptainer container engine |
+| `conda` | nf-core base | Last-resort native conda envs |
+
+Profiles compose: `-profile test,singularity` is the canonical CI smoke test.

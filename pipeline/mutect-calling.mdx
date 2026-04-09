@@ -1,0 +1,24 @@
+---
+title: "MUTECT_CALLING subworkflow"
+description: "Steps 17–23: Mutect2 variant calling, contamination correction, filtering, and curated VCF emission."
+icon: "search"
+sidebarTitle: "MUTECT_CALLING"
+---
+
+<Note>
+**Steps 17–23** of the legacy 31-step pipeline. **Placeholder** — Phase 4 of the IPG docs rollout will fill this with the real subworkflow page. Step 23 wraps the kescull `curate_vcf` C tool.
+</Note>
+
+## What this page will cover
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 17 | `gatk Mutect2` | Tumor-only variant calling, emits `_mutect.vcf.gz` + `_f1r2.tar.gz` |
+| 18 | `gatk LearnReadOrientationModel` | Build read orientation prior |
+| 19 | `gatk GetPileupSummaries` | Pileup against `small_exac_common_3.hg38.vcf.gz` |
+| 20 | `gatk CalculateContamination` | Estimate sample contamination |
+| 21 | `gatk FilterMutectCalls` | Combine orientation + contamination filters |
+| 22 | `gatk SelectVariants` | `--exclude-filtered true --sites-only-vcf-output true` → `_mutect_COV_pass.vcf` |
+| 23 | **`curate_vcf`** (kescull C) | Split into `_unmasked.vcf` + `_indel.vcf` for downstream alt-ref construction |
+
+Source: [`subworkflows/local/mutect_calling/main.nf`](https://github.com/sanjaysgk/ipg/blob/dev/cryptic-port/subworkflows/local/mutect_calling/main.nf).

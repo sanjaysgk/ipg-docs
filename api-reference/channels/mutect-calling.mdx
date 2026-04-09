@@ -1,0 +1,25 @@
+---
+title: "MUTECT_CALLING channels"
+description: "Inputs and outputs of the MUTECT_CALLING subworkflow (steps 17–23)."
+icon: "arrows-left-right"
+sidebarTitle: "mutect_calling"
+---
+
+<Note>
+**Placeholder.** Phase 5 of the IPG docs rollout.
+</Note>
+
+## Inputs
+
+- `recal_bam_bai` — from `BQSR`
+- `ch_fasta`, `ch_fai`, `ch_dict` — reference FASTA bundle
+- `ch_germline_resource` — small ExAC VCF for contamination estimation
+- `ch_germline_resource_tbi` — matching tabix index
+
+## Outputs
+
+- `unmasked_vcf` — `[meta, path]` from `curate_vcf -d` mode (step 23)
+- `indel_vcf` — `[meta, path]` from `curate_vcf` default mode (step 23)
+- `versions` — `versions.yml` channel
+
+See [pipeline/mutect-calling](/pipeline/mutect-calling) for the science.

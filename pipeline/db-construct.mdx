@@ -1,0 +1,27 @@
+---
+title: "DB_CONSTRUCT subworkflow"
+description: "Steps 24–31: build the sample-specific cryptic peptide FASTA database — the pipeline's primary deliverable."
+icon: "database"
+sidebarTitle: "DB_CONSTRUCT"
+---
+
+<Note>
+**Steps 24–31** of the legacy 31-step pipeline. **Five of the eight steps wrap kescull C tools** (`revert_headers`, `gff3sort`, `alt_liftover`, `triple_translate`, `squish`). **Placeholder** — Phase 4 of the IPG docs rollout will fill this with the real subworkflow page.
+</Note>
+
+## What this page will cover
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 24 | `gatk IndexFeatureFile` | Index `_unmasked.vcf` and `_indel.vcf` |
+| 25 | `gatk FastaAlternateReferenceMaker` | Build two alt-ref FASTAs (unmasked + indel) |
+| 26 | **`revert_headers`** (kescull C) | Restore chr names that `FastaAlternateReferenceMaker` rewrote |
+| 27 | **`gff3sort.pl`** (third-party Perl) | `--chr_order original` on `prefix.combined.gtf` |
+| 28 | **`alt_liftover`** (kescull C) | Lift GTF coordinates onto the alt-ref genomes (run twice) |
+| 29 | `gffread` | Three runs: unmasked-tx, indel-tx, reference-tx → transcriptome FASTAs |
+| 30 | **`triple_translate`** (kescull C) | 3-frame translation of each transcriptome → protein FASTA |
+| 31 | **`squish`** (kescull C) | Merge + dedup the three protein DBs → **`<sample>_cryptic.fasta`** (the deliverable) |
+
+The `<sample>_cryptic.fasta` is the input to MS database search engines (PEAKS or compatible). Downstream classification of the identified peptides is the scope of the planned [`ipg-origins` sister pipeline](/background/related-work).
+
+Source: [`subworkflows/local/db_construct/main.nf`](https://github.com/sanjaysgk/ipg/blob/dev/cryptic-port/subworkflows/local/db_construct/main.nf).

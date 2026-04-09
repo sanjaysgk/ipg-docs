@@ -1,0 +1,19 @@
+---
+title: "Documentation dev workflow"
+description: "How to write and review pages for the IPG documentation site."
+icon: "code-branch"
+---
+
+<Note>
+**Placeholder.** Phase 6 of the IPG docs rollout. This page is for contributors to the docs site itself, not the pipeline.
+</Note>
+
+## What this page will cover
+
+- Cloning `ipg-docs` and setting up the pixi env (Node 22)
+- Running `pixi run npx mint dev` for local preview (and the [Monash M3 SSH-tunnel walkthrough](/get-started/dev-preview))
+- Branch model: `dev/<area>` topic branches off `main`, no direct commits to `main`
+- Atomic commit conventions (`<area>: <imperative summary>`, no AI attribution, never `git add .`)
+- The 8 document types from `.claude/DOC_TYPES.md` and the frontmatter contract (`docType:` + `audience:`)
+- `mint broken-links` and `mint validate` before every PR
+- The "preserve starter examples" rule

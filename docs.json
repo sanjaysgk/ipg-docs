@@ -1,0 +1,264 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "IPG",
+  "description": "Documentation for the sanjaysgk/ipg nf-core Nextflow pipeline — RNA-seq driven cryptic peptide database construction for immunopeptidogenomics.",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Home",
+        "icon": "house",
+        "groups": [
+          {
+            "group": "Welcome",
+            "pages": [
+              "index"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Get started",
+        "icon": "rocket",
+        "groups": [
+          {
+            "group": "Onboarding",
+            "pages": [
+              "get-started/install",
+              "get-started/quickstart",
+              "get-started/dev-preview",
+              "get-started/first-run"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Pipeline",
+        "icon": "dna",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "pipeline/overview"
+            ]
+          },
+          {
+            "group": "Subworkflows",
+            "pages": [
+              "pipeline/align-qc",
+              "pipeline/transcript-assembly",
+              "pipeline/bam-prep",
+              "pipeline/bqsr",
+              "pipeline/mutect-calling",
+              "pipeline/db-construct"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "icon": "square-terminal",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/overview",
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Inputs",
+            "pages": [
+              "api-reference/samplesheet",
+              "api-reference/parameters/input-output",
+              "api-reference/parameters/reference-genome",
+              "api-reference/parameters/known-sites",
+              "api-reference/parameters/germline-contamination",
+              "api-reference/parameters/advanced"
+            ]
+          },
+          {
+            "group": "Channels (subworkflow I/O)",
+            "pages": [
+              "api-reference/channels/align-qc",
+              "api-reference/channels/transcript-assembly",
+              "api-reference/channels/bam-prep",
+              "api-reference/channels/bqsr",
+              "api-reference/channels/mutect-calling",
+              "api-reference/channels/db-construct"
+            ]
+          },
+          {
+            "group": "Runtime",
+            "pages": [
+              "api-reference/profiles"
+            ]
+          },
+          {
+            "group": "Outputs",
+            "pages": [
+              "api-reference/outputs"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Tutorials",
+        "icon": "graduation-cap",
+        "groups": [
+          {
+            "group": "End-to-end recipes",
+            "pages": [
+              "tutorials/monash-m3",
+              "tutorials/local-docker",
+              "tutorials/aws-batch"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Operations",
+        "icon": "gauge",
+        "groups": [
+          {
+            "group": "Running in production",
+            "pages": [
+              "operations/troubleshooting",
+              "operations/performance",
+              "operations/faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Background",
+        "icon": "flask",
+        "groups": [
+          {
+            "group": "Science",
+            "pages": [
+              "background/cryptic-peptides",
+              "background/methods",
+              "background/related-work",
+              "background/citations"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Contributing",
+        "icon": "code-branch",
+        "groups": [
+          {
+            "group": "Developer guide",
+            "pages": [
+              "contributing/dev-workflow",
+              "contributing/testing",
+              "contributing/architecture",
+              "contributing/changelog"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Cookbook",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Mintlify component examples",
+            "pages": [
+              "essentials/markdown",
+              "essentials/code",
+              "essentials/images",
+              "essentials/navigation",
+              "essentials/settings",
+              "essentials/reusable-snippets"
+            ]
+          },
+          {
+            "group": "Page templates",
+            "pages": [
+              "quickstart",
+              "development"
+            ]
+          },
+          {
+            "group": "AI tooling pages",
+            "pages": [
+              "ai-tools/cursor",
+              "ai-tools/claude-code",
+              "ai-tools/windsurf"
+            ]
+          },
+          {
+            "group": "OpenAPI demo (Plant Store)",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Pipeline repo",
+          "href": "https://github.com/sanjaysgk/ipg",
+          "icon": "github"
+        },
+        {
+          "anchor": "Issues",
+          "href": "https://github.com/sanjaysgk/ipg/issues",
+          "icon": "circle-exclamation"
+        },
+        {
+          "anchor": "nf-core",
+          "href": "https://nf-co.re",
+          "icon": "dna"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Issues",
+        "href": "https://github.com/sanjaysgk/ipg/issues"
+      }
+    ],
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/sanjaysgk/ipg"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/sanjaysgk/ipg"
+    }
+  }
+}
