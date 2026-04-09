@@ -1,17 +1,220 @@
 ---
 title: "Install"
-description: "Install Nextflow, a container engine, and pull the IPG pipeline."
+description: "Install Nextflow, a container engine, and pull sanjaysgk/ipg in five minutes."
 icon: "download"
+sidebarTitle: "Install"
 ---
 
-<Note>
-**Placeholder.** Phase 3 of the IPG docs rollout — see `.claude/PLAN.md`. Until this page is written, follow the [nf-core installation guide](https://nf-co.re/docs/usage/installation) and clone [`sanjaysgk/ipg`](https://github.com/sanjaysgk/ipg) directly.
-</Note>
+<Info>
+**You'll need:** a Linux or macOS machine (Windows users: WSL2), Java 17 or newer, ~10 GB free disk for tools and a single test container, an internet connection on first run, and **either** Docker, Singularity, Podman, Apptainer, or Conda available on your `PATH`. Estimated time: 5 minutes.
+</Info>
 
-## What this page will cover
+## Goal
 
-- Nextflow ≥ 24.04.2 install (`pixi`, `conda`, or direct binary)
-- Container engine choice: Docker, Singularity, Podman, Apptainer, Conda fallback
-- `nextflow pull sanjaysgk/ipg`
-- Verifying the install with `nextflow run sanjaysgk/ipg --help`
-- Per-OS notes (Linux, macOS, Monash M3 module-load shim)
+By the end of this page you can run:
+
+```bash
+nextflow run sanjaysgk/ipg --version
+```
+
+…and see a version number, with no errors. The actual pipeline runs come next in [Quickstart](/get-started/quickstart).
+
+## Steps
+
+<Steps>
+  <Step title="Install Nextflow ≥ 24.04.2">
+    Pick the install path that matches your environment. **`pixi` is recommended on shared HPC** like Monash M3 — it gives you a per-project environment that doesn't pollute the system Python or conflict with other Nextflow versions on the cluster.
+
+    <Tabs>
+      <Tab title="pixi (recommended)">
+        ```bash
+        # One-time, in your project directory:
+        pixi init
+        pixi add nextflow nf-core nf-test
+
+        # Then every Nextflow command runs through pixi:
+        pixi run nextflow -version
+        ```
+
+        On Monash M3 this is the only install method that survives across login nodes and interactive sessions without conflicts. If you don't have `pixi` itself yet:
+
+        ```bash
+        curl -fsSL https://pixi.sh/install.sh | bash
+        ```
+      </Tab>
+      <Tab title="conda / mamba">
+        ```bash
+        mamba create -n ipg -c bioconda nextflow nf-core nf-test
+        mamba activate ipg
+        nextflow -version
+        ```
+      </Tab>
+      <Tab title="Direct binary">
+        ```bash
+        curl -s https://get.nextflow.io | bash
+        chmod +x nextflow
+        sudo mv nextflow /usr/local/bin/   # or any directory on $PATH
+        nextflow -version
+        ```
+
+        Requires Java 17+. Check with `java -version`.
+      </Tab>
+      <Tab title="Monash M3 module">
+        ```bash
+        module load nextflow
+        nextflow -version
+        ```
+
+        <Warning>
+        The cluster module may pin an older version. If `nextflow -version` reports below `24.04.2`, switch to the `pixi` tab — the IPG pipeline requires DSL2 features only stable from `24.04.2` onward.
+        </Warning>
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Install a container engine">
+    Containers make the pipeline reproducible — every tool runs at the exact version it was tested against. **Singularity is the right choice on HPC**; Docker is the right choice on a laptop or workstation.
+
+    <Tabs>
+      <Tab title="Singularity (HPC)">
+        Most HPC clusters already have Singularity (or its drop-in successor Apptainer) installed system-wide. On Monash M3:
+
+        ```bash
+        which singularity
+        singularity --version
+        ```
+
+        If neither works, ask your cluster admin — Singularity must be installed by root and isn't a per-user install.
+
+        <Tip>
+        On Monash M3, the IPG pipeline writes pulled container images to a shared cache at `/fs04/scratch2/xy86/singularity_cache` so concurrent jobs don't re-pull the same image. This is wired into the [`monash` profile](/api-reference/profiles).
+        </Tip>
+      </Tab>
+      <Tab title="Docker (laptop)">
+        Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) for your OS, start it, then verify:
+
+        ```bash
+        docker --version
+        docker run --rm hello-world
+        ```
+
+        Allocate at least **8 GB RAM and 4 CPUs** to Docker Desktop in its preferences — STAR alignment will OOM-kill on the default 2 GB.
+      </Tab>
+      <Tab title="Apptainer">
+        Apptainer is the open-source successor to Singularity. The pipeline treats them interchangeably.
+
+        ```bash
+        apptainer --version
+        ```
+
+        If you only have `apptainer` and not `singularity`, that's fine — the `singularity` profile in `nextflow.config` works with both.
+      </Tab>
+      <Tab title="Conda fallback">
+        <Warning>
+        Conda is the **fallback of last resort**. Tool versions drift from the published containers and reproducibility suffers. Use only when no container engine is available.
+        </Warning>
+
+        ```bash
+        mamba --version    # or: conda --version
+        ```
+
+        You'll launch the pipeline with `-profile conda` instead of `-profile singularity` or `-profile docker`.
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Pull the pipeline">
+    Nextflow can pull `sanjaysgk/ipg` directly from GitHub the first time you reference it. To pre-cache it (recommended on HPC, so the first real run isn't waiting on `git clone`):
+
+    <CodeGroup>
+      ```bash pixi
+      pixi run nextflow pull sanjaysgk/ipg
+      ```
+
+      ```bash bare nextflow
+      nextflow pull sanjaysgk/ipg
+      ```
+    </CodeGroup>
+
+    Nextflow caches the pipeline under `~/.nextflow/assets/sanjaysgk/ipg/`. To pin a specific revision (recommended for reproducibility), use the `-r` flag in subsequent runs:
+
+    ```bash
+    nextflow run sanjaysgk/ipg -r dev/cryptic-port -profile test,singularity
+    ```
+  </Step>
+
+  <Step title="Verify the install">
+    Check that Nextflow can resolve the pipeline and print its parameter help:
+
+    <CodeGroup>
+      ```bash pixi
+      pixi run nextflow run sanjaysgk/ipg --help
+      ```
+
+      ```bash bare nextflow
+      nextflow run sanjaysgk/ipg --help
+      ```
+    </CodeGroup>
+
+    <Check>
+    You should see a coloured banner that starts with `sanjaysgk/ipg`, followed by a list of parameter groups (`--input`, `--outdir`, `--fasta`, `--star_index`, `--gtf`, …). If you see Nextflow's own usage instead of the pipeline's parameters, the pull failed — re-run step 3 with verbose output: `nextflow -log /tmp/nf.log pull sanjaysgk/ipg`.
+    </Check>
+  </Step>
+</Steps>
+
+## What's next
+
+<Columns cols={2}>
+  <Card title="Quickstart on the test profile" icon="bolt" href="/get-started/quickstart">
+    Run the chr22 test bundle end-to-end in ~15 minutes.
+  </Card>
+  <Card title="Your first real run" icon="play" href="/get-started/first-run">
+    Build a samplesheet from your own RNA-seq data and submit to Monash M3.
+  </Card>
+</Columns>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Nextflow says my Java version is too old">
+    The pipeline requires Java 17 or newer. On Monash M3:
+
+    ```bash
+    module load java/17
+    java -version
+    ```
+
+    On a personal machine, install OpenJDK 17 from your package manager (`apt install openjdk-17-jdk`, `brew install openjdk@17`). If you used the `pixi` install path, `pixi add openjdk=17.*` puts a project-local Java on `PATH`.
+  </Accordion>
+
+  <Accordion title="`nextflow pull` hangs forever on Monash M3">
+    The compute nodes don't have outbound internet on the `comp` partition. Run `nextflow pull` from the **login node** (`m3.massive.org.au`) or from the data transfer node (`m3-dtn`). Once the pipeline is cached under `~/.nextflow/assets/`, subsequent compute jobs read from the cache.
+  </Accordion>
+
+  <Accordion title="Singularity says `FATAL: container creation failed`">
+    Most often a stale or partially-pulled image in the cache. Clear it for the affected tool:
+
+    ```bash
+    ls -la /fs04/scratch2/xy86/singularity_cache/ | grep <tool>
+    rm /fs04/scratch2/xy86/singularity_cache/<the-broken-image>.img
+    ```
+
+    Then re-run with `-resume`. If the issue persists across multiple tools, verify your project quota: `quota -s | grep xy86`.
+  </Accordion>
+
+  <Accordion title="Docker Desktop OOM-kills STAR">
+    STAR's chr22 index alone needs ~6 GB RAM. Open **Docker Desktop → Settings → Resources** and bump the memory limit to at least **8 GB** (12 GB if you can spare it). Then restart Docker Desktop and re-run.
+  </Accordion>
+
+  <Accordion title="`pixi run nextflow` fails with `command not found`">
+    `pixi add nextflow` must be run from the project directory (the one containing `pixi.toml`). If you're in a sub-directory, `cd` back to the project root or use `pixi run --manifest-path <path>/pixi.toml nextflow ...`.
+  </Accordion>
+
+  <Accordion title="I get a different error not listed here">
+    File an issue at [github.com/sanjaysgk/ipg/issues](https://github.com/sanjaysgk/ipg/issues) with:
+    - Output of `nextflow -version`
+    - Output of `singularity --version` (or `docker --version`)
+    - The exact command you ran
+    - The contents of `.nextflow.log` from your run directory
+  </Accordion>
+</AccordionGroup>
