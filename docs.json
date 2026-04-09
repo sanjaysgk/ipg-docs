@@ -9,6 +9,9 @@
     "dark": "#14532D"
   },
   "favicon": "/favicon.svg",
+  "icons": {
+    "library": "lucide"
+  },
   "navigation": {
     "tabs": [
       {
